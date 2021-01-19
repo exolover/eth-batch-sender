@@ -1,7 +1,7 @@
 # eth-batch-sender
 A utility for preparing, signing and sending to the Ethereum network a
  transaction for sending tokens in a bundle. The recipient addresses must 
- be specified in the `receivers.csv` file, each on a separate line. 
+ be specified in the `addrlist.csv` file, each on a separate line. 
 
 
 ### Local use with Docker
@@ -9,7 +9,7 @@ A utility for preparing, signing and sending to the Ethereum network a
 All parameters are passed to the container through environment variables,
 which can be set in the file `.env.local` 
 
-`env.local` example
+`env.local` example (!!!testnet)
 ```txt
 APP_LOGLEVEL=40
 WEB3_INFURA_PROJECT_ID=79f3c18a7d394279b3bc877fa2610caf
@@ -27,25 +27,18 @@ GAS_PRICE=100
 cd eth-batch-sender
 
 #1. Build image with dependencies
-docker build -f ./docker/DockerfileLocal -t eth_batch_sender:local .
+docker build -f ./docker/Dockerfile -t eth_batch_sender:local .
 
-#2. !!!!!!!!!! put and check receivers strings into receivers.csv
-cat receivers.csv
+#2. !!!!!!!!!! put and check receivers strings into addrlist.csv
+cat addrlist.csv
 
-#3. Just run and check output
+#3. Check .env.local params!!!!!
+cat .env.local
+
+#4. Just run and check output
 docker-compose -p batch -f docker-compose-local.yaml up
 ```
-### Examples of tx sent
-[DEMO PROMO vTOKEN with promo(address[] _rec)](https://rinkeby.etherscan.io/token/0x131220c96a08020cc9e58954ddc26c89b6dc2b13)  
-[1000+ address tx](https://rinkeby.etherscan.io/tx/0x5a6fb25ece2c726508bcf2228adb0be7b658ea2b02902fb29b3717d2d967a8e2)  
-[PROMO token code](./yAtoken.sol)
--------------------------------------------------------------------
 
-[Token ERC20+ multiTransfer([],[])](https://rinkeby.etherscan.io/address/0x9cae745007abc88e7af872f704795e3823fd7d91#code)  
-
-Transactions:  
-https://rinkeby.etherscan.io/tx/0x994ced7df05924bc991a8b2810f85358035f652aeda11d09a0add1065a58a74b  
-https://rinkeby.etherscan.io/tx/0x53ef83aaa38541c233b4d1970693a6c9b9e0f5fcf61e18722dcd45d63287364f  
 
 ### Adaptation
 Lines 21-27 of the `batch_sender.py` file can be changed if the method has a different name and parameters.

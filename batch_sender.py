@@ -19,11 +19,10 @@ def handle_batch_transfer(_receivers_list):
         #1. Prepare contrac method
         ########################################################
         tx_data = token.encodeABI(
-            #fn_name="multiTransfer", 
-            fn_name="promo",
+            fn_name="multiTransfer", 
             args=[
-                [Web3.toChecksumAddress(a) for a in _receivers_list] #address array
-                #[1*10**18 for a in range(len(_receivers_list))] #amount array
+                [Web3.toChecksumAddress(x.split(',')[0]) for x in _receivers_list], #address array
+                [int(x.split(',')[1]) for x in _receivers_list], #amount array
             ]
         )
         logging.debug('tx_data={}'.format(tx_data))
@@ -34,7 +33,7 @@ def handle_batch_transfer(_receivers_list):
             'from': config.ADDRESS_OPERATOR, 
             'data': tx_data,
             'nonce':w3.eth.getTransactionCount(config.ADDRESS_OPERATOR), 
-            'gas':8000000, 
+            'gas':400000, 
             'gasPrice': _gasPrice
         }
         logging.debug('tx_full_data={}'.format(tx_full_data))
@@ -90,9 +89,9 @@ def main():
 
     with open(file1) as r_file:
         lines = r_file.readlines()
-        receivers_list=[s.rstrip('\n') for s in lines]
-        logging.debug('Receivers are {}'.format(receivers_list))
-        handle_batch_transfer(receivers_list) 
+        lines_list=[s.rstrip('\n') for s in lines]
+        logging.debug('Receivers are {}'.format(lines_list))
+        handle_batch_transfer(lines_list) 
 
 
 

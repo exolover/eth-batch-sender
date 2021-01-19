@@ -8,5 +8,5 @@ services:
        - ./:/app
     env_file: ./.env.local
     network_mode: "host"
-    command: ["batch_sender.py", "receivers.csv"]    
+    command: ["batch_sender.py", "addrlist.csv"]    
 
