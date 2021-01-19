@@ -9,7 +9,7 @@ A utility for preparing, signing and sending to the Ethereum network a
 All parameters are passed to the container through environment variables,
 which can be set in the file `.env.local` 
 
-`env.local` example (!!!testnet)
+`env.local` **example** (!!!testnet)
 ```txt
 APP_LOGLEVEL=40
 WEB3_INFURA_PROJECT_ID=79f3c18a7d394279b3bc877fa2610caf
@@ -24,18 +24,22 @@ GAS_PRICE=100
 
 
 ```bash
+#0. Clone project sources in  your home(any you want) folder
+git clone git@github.com:exolover/eth-batch-sender.git
+
+#1. Change to this folder
 cd eth-batch-sender
 
-#1. Build image with dependencies
+#2. Build image with dependencies
 docker build -f ./docker/Dockerfile -t eth_batch_sender:local .
 
-#2. !!!!!!!!!! put and check receivers strings into addrlist.csv
+#3. !!!!!!!!!! put and check receivers strings into addrlist.csv
 cat addrlist.csv
 
-#3. Check .env.local params!!!!!
+#4. edit and Check .env.local params!!!!!
 cat .env.local
 
-#4. Just run and check output
+#5. Just run and check output
 docker-compose -p batch -f docker-compose-local.yaml up
 ```
 

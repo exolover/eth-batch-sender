@@ -11,5 +11,5 @@ deployaws
 *.log
 temp*
 .env
-.env.local
+.env.prod
 .env.test
